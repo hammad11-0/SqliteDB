@@ -1,6 +1,8 @@
 package haqnawaz.org.sqlitedb20211216;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -18,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
     Button buttonAdd, buttonViewAll;
     EditText editName, editAge;
     Switch switchIsActive;
-    ListView listViewStudent;
+  private RecyclerView r1;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         editName = findViewById(R.id.editTextName);
         editAge = findViewById(R.id.editTextAge);
         switchIsActive = findViewById(R.id.switchStudent);
-        listViewStudent = findViewById(R.id.listViewStudent);
+
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             StudentModel studentModel;
@@ -53,9 +57,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DbHelper dbHelper = new DbHelper(MainActivity.this);
                 List<StudentModel> list = dbHelper.getAllStudents();
-                ArrayAdapter arrayAdapter = new ArrayAdapter<StudentModel>(MainActivity.this, android.R.layout.simple_list_item_1,list);
-                listViewStudent.setAdapter(arrayAdapter);
+                r1=findViewById(R.id.RecyclerView);
 
+
+
+                layoutManager = new LinearLayoutManager(MainActivity.this);
+                r1.setLayoutManager(layoutManager);
+                adapter = new myRVA(list,MainActivity.this) {
+
+                };
+                r1.setAdapter(adapter);
 
 
             }

@@ -29,10 +29,12 @@ public class StudentModel {
 
     public boolean isActive() {
         return isActive;
+
     }
 
     public void setActive(boolean active) {
         isActive = active;
+
     }
 
     public int getId() {
